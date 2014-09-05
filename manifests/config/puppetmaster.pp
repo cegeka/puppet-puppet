@@ -14,6 +14,14 @@ class puppet::config::puppetmaster {
     mode   => '0755'
   }
 
+  file { '/etc/puppet/hiera.yaml':
+    ensure => file,
+    owner  => 'puppet',
+    group  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/${module_name}/hiera.yaml",
+  }
+
   file { '/etc/puppet/rack/config.ru':
     ensure  => file,
     owner   => 'puppet',
