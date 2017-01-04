@@ -1,0 +1,18 @@
+---
+:backends: - mysql
+           - puppet
+:hierarchy: - %{environment}
+            - common
+:puppet:
+    :datasource: data
+:mysql:
+    :host: mysql.service.cegeka.be
+    :user: puppethiera
+    :pass: thao2EeChee1NeNg
+    :database: puppethiera
+
+:query:
+    - SELECT variable,value FROM configuration LEFT JOIN tenants ON (configuration.tenant = tenants.id) WHERE variable='%{key}' AND tenants.name='%{::customer}' AND environment='%{::customerenv}' AND fqdn='%{::fqdn}'
+    - SELECT variable,value FROM configuration LEFT JOIN tenants ON (configuration.tenant = tenants.id) WHERE variable='%{key}' AND tenants.name='%{::customer}' AND environment='%{::customerenv}' AND fqdn=''
+    - SELECT variable,value FROM configuration LEFT JOIN tenants ON (configuration.tenant = tenants.id) WHERE variable='%{key}' AND tenants.name='%{::customer}' AND environment='' AND fqdn=''
+    - SELECT variable,value FROM configuration LEFT JOIN tenants ON (configuration.tenant = tenants.id) WHERE variable='%{key}' AND tenants.name='common'AND environment='' AND fqdn=''
