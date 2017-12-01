@@ -10,7 +10,10 @@
 #
 # Sample Usage:
 #
-class puppet {
+class puppet (
+  $service_ensure   = 'running',
+  $service_enabled  = 'true'
+) {
 
   file { '/etc/puppet/puppet.conf':
     ensure => present,
@@ -20,8 +23,8 @@ class puppet {
   }
 
   service { 'puppet':
-    ensure     => running,
-    enable     => true,
+    ensure     => $service_ensure,
+    enable     => $service_enabled,
     hasrestart => true,
     hasstatus  => true;
   }
