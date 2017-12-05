@@ -12,7 +12,7 @@
 #
 class puppet (
   $service_ensure   = 'running',
-  $service_enabled  = 'true'
+  $service_enabled  = true
 ) {
 
   file { '/etc/puppet/puppet.conf':
