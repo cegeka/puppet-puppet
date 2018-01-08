@@ -12,3 +12,4 @@ This module manages puppet and provides reporting functionality. You can setup y
 
   puppet::foreman::config::puppetagent { 'configure agent reporting': }
 
+
