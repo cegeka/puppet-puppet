@@ -15,8 +15,8 @@ define puppet::main::setting( $ensure = 'present', $value = undef ) {
       }
     }
     'present': {
-      if ($value == undef) or (! is_integer($value) and ! is_string($value)) {
-        fail("Puppet::Main::Setting[${title}]: required parameter value must be a non-empty string or integer")
+      if ($value == undef) or ((! is_string($value)) and (! is_integer($value)) and (! is_bool($value))) {
+        fail("Puppet::Main::Setting[${title}]: required parameter value must be a non-empty string, boolean or integer")
       }
       else {
         augeas { "puppet::main::${title}":
