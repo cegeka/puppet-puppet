@@ -1,9 +1,9 @@
-define puppet::master::setting( $ensure = 'present', $value = undef ) {
+define puppet::master::setting( $ensure = 'present', $value = undef, $config = '/etc/puppet/puppet.conf' ) {
 
   Augeas {
     lens    => 'Puppet.lns',
-    incl    => '/etc/puppet/puppet.conf',
-    context => '/files/etc/puppet/puppet.conf/master',
+    incl    => $config,
+    context => "/files${config}/master",
   }
 
   case $ensure {

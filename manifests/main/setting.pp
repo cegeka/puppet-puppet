@@ -1,27 +1,30 @@
-define puppet::main::setting( $ensure = 'present', $value = undef ) {
+# Define: puppet::main::setting
+#
+#
+define puppet::main::setting( $ensure = present, $value = undef, $config = '/etc/puppet/puppet.conf' ) {
 
   Augeas {
     lens    => 'Puppet.lns',
-    incl    => '/etc/puppet/puppet.conf',
-    context => '/files/etc/puppet/puppet.conf/main',
-    notify  => Service['puppet'],
+    incl    => $config,
+    context => "/files${config}/main',
+    notify  => Service['puppet']
   }
 
   case $ensure {
-    'absent': {
-      augeas { "puppet::main::${title}":
+    absent: {
+      augeas { "puppet::agent::setting::${title}":
         onlyif  => "match ${title} size > 0",
-        changes => "rm ${title}",
+        changes => "rm ${title}"
       }
     }
-    'present': {
+    present: {
       if ($value == undef) or ((! is_string($value)) and (! is_integer($value)) and (! is_bool($value))) {
         fail("Puppet::Main::Setting[${title}]: required parameter value must be a non-empty string, boolean or integer")
       }
       else {
         augeas { "puppet::main::${title}":
           onlyif  => "match ${title}[. = '${value}'] size == 0",
-          changes => "set ${title} '${value}'",
+          changes => "set ${title} '${value}'"
         }
       }
     }
