@@ -1,4 +1,7 @@
-define puppet::agent::setting( $ensure = 'present', $value = undef, $config = '/etc/puppet/puppet.conf' ) {
+# Define: puppet::agent::setting
+#
+#
+define puppet::agent::setting( $ensure = present, $value = undef, $config = '/etc/puppet/puppet.conf' ) {
 
   Augeas {
     lens    => 'Puppet.lns',
@@ -8,13 +11,13 @@ define puppet::agent::setting( $ensure = 'present', $value = undef, $config = '/
   }
 
   case $ensure {
-    'absent': {
-      augeas { "puppet::agent::${title}":
+    absent: {
+      augeas { "puppet::agent::setting::${title}":
         onlyif  => "match ${title} size > 0",
         changes => "rm ${title}",
       }
     }
-    'present': {
+    present: {
       if ($value == undef) or ((! is_string($value)) and (! is_bool($value))) {
         fail("Puppet::Agent::Setting[${title}]: required parameter value must be a non-empty string or boolean")
       }
@@ -24,9 +27,9 @@ define puppet::agent::setting( $ensure = 'present', $value = undef, $config = '/
         } else {
           $real_value = $value
         }
-        augeas { "puppet::agent::${title}":
+        augeas { "puppet::agent::setting::${title}":
           onlyif  => "match ${title}[. = '${real_value}'] size == 0",
-          changes => "set ${title} ${real_value}",
+          changes => "set ${title} '${real_value}''",
         }
       }
     }
