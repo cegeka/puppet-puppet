@@ -1,4 +1,4 @@
-#
+# Define: puppet 5 master
 #
 define puppet::master5::setting(
   $ensure = present,
@@ -28,7 +28,6 @@ define puppet::master5::setting(
             $real_value = $value
         }
         augeas { "puppet::master5::${title}":
-          #onlyif  => "match ${title}[. = '${real_value}'] size == 0",
           onlyif  => "match @simple[.='${title}']/@value[.='${real_value}'] size == 0",
           changes => [
             "set @simple[.='${title}'] ${title}",

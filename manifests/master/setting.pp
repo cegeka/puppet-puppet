@@ -1,3 +1,5 @@
+# Define: puppet master
+#
 define puppet::master::setting( $ensure = 'present', $value = undef, $config = '/etc/puppet/puppet.conf' ) {
 
   Augeas {
