@@ -14,7 +14,7 @@ class puppet (
   $service_ensure   = 'running',
   $service_enabled  = true,
   $package_name     = 'puppet',
-  $package_version  = 'present',
+  $package_version  = 'latest',
   $puppet_config    = '/etc/puppet/puppet.conf'
 ) {
 
