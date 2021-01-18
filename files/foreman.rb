@@ -57,6 +57,9 @@ Puppet::Reports.register_report(:foreman) do
           http.cert = OpenSSL::X509::Certificate.new(File.read(SETTINGS[:ssl_cert]))
           http.key  = OpenSSL::PKey::RSA.new(File.read(SETTINGS[:ssl_key]), nil)
         end
+        if !SETTINGS[:ssl_ca].empty?
+          http.cert_store = OpenSSL::X509::Store.new(File.read(SETTINGS[:ssl_ca]))
+        end
       end
       req = Net::HTTP::Post.new("#{uri.path}/api/config_reports")
       req.add_field('Accept', 'application/json,version=2' )
