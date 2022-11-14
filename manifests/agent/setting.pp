@@ -18,8 +18,8 @@ define puppet::agent::setting( $ensure = present, $value = undef, $config = '/et
       }
     }
     present: {
-      if ($value == undef) or ((! is_string($value)) and (! is_bool($value))) {
-        fail("Puppet::Agent::Setting[${title}]: required parameter value must be a non-empty string or boolean")
+      if ($value == undef) or ((! is_string($value)) and (! is_bool($value)) and (! is_numeric($value))) {
+        fail("Puppet::Agent::Setting[${title}]: required parameter value must be a non-empty numeric, string or boolean")
       }
       else {
         if is_bool($value) {
