@@ -1,7 +1,11 @@
 # Define: puppet::agent::setting
 #
 #
-define puppet::agent::setting( $ensure = present, $value = undef, $config = '/etc/puppet/puppet.conf' ) {
+define puppet::agent::setting(
+  $ensure = present,
+  $value = undef,
+  $config = '/etc/puppet/puppet.conf'
+  ) {
 
   Augeas {
     lens    => 'Puppet.lns',

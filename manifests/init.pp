@@ -13,20 +13,21 @@
 class puppet (
   $service_ensure   = 'running',
   $service_enabled  = true,
+  $package_ensure   = 'latest',
   $package_name     = 'puppet',
-  $package_version  = 'latest',
+  $puppet_config_ensure = 'present',
   $puppet_config    = '/etc/puppet/puppet.conf'
 ) {
 
   file { $puppet_config :
-    ensure => present,
+    ensure => $puppet_config_ensure,
     owner  => 'puppet',
     group  => 'puppet',
     notify => Service['puppet'],
   }
 
   package { $package_name :
-    ensure => $package_version
+    ensure => $package_ensure
   }
 
   service { 'puppet':
